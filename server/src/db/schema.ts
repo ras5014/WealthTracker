@@ -58,23 +58,17 @@ export const transaction = pgTable(
     amount: integer("amount").notNull(),
     category: varchar("category", { length: 100 }),
     subCategory: varchar("sub_category", { length: 100 }),
-    paymentMethod: paymentMethodEnum("payment_method").notNull(),
-    creditedTo: creditedToEnum("credited_to").notNull(),
+    paymentMethod: paymentMethodEnum("payment_method"),
+    creditedTo: creditedToEnum("credited_to"),
     creditCard: varchar("credit_card", { length: 50 }),
     note: text("note"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },
-  (table) => ({
-    userDateIndex: index("transactions_user_date_idx").on(
-      table.userId,
-      table.date,
-    ),
-    userTypeIndex: index("transactions_user_type_idx").on(
-      table.userId,
-      table.transactionType,
-    ),
-  }),
+  (table) => [
+    index("transactions_user_date_idx").on(table.userId, table.date),
+    index("transactions_user_type_idx").on(table.userId, table.transactionType),
+  ],
 );
 
 export const transactionRelations = relations(transaction, ({ one }) => ({
