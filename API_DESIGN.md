@@ -23,6 +23,28 @@ The fix is to split by **resource** and by **access pattern**.
 All endpoints require `Authorization: Bearer <token>` (JWT).  
 All responses follow: `{ data: T, meta?: PaginationMeta }` or `{ error: string }`.
 
+### Tenant isolation
+
+`transactions.user_id` is the tenant boundary. The authentication middleware
+must verify the JWT and expose its subject as `req.user.id`. Every transaction
+query must scope by that value:
+
+```ts
+// The client must not send userId. It is taken from the verified token.
+const userId = req.user.id;
+
+await db.insert(transaction).values({ ...req.body, userId });
+
+await db
+  .select()
+  .from(transaction)
+  .where(and(eq(transaction.id, transactionId), eq(transaction.userId, userId)));
+```
+
+Use the same `userId` predicate for `GET`, `PUT`, and `DELETE`. A transaction
+ID by itself is not sufficient authorization: otherwise a user who guesses
+another transaction ID could read or modify it.
+
 ---
 
 ### 1. Transactions
@@ -299,8 +321,8 @@ These make the Redis-free endpoints fast enough that you won't need caching ther
 
 ```sql
 -- Transactions: the most queried table
-CREATE INDEX idx_transactions_user_month ON transactions (user_id, DATE_FORMAT(date, '%Y-%m'));
-CREATE INDEX idx_transactions_user_type  ON transactions (user_id, transaction_type);
+CREATE INDEX idx_transactions_user_date ON transactions (user_id, date);
+CREATE INDEX idx_transactions_user_type ON transactions (user_id, transaction_type);
 
 -- EMIs
 CREATE INDEX idx_emis_user ON emis (user_id);
