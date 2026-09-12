@@ -20,5 +20,8 @@
   "homepage": "https://github.com/ras5014/WealthTracker#readme",
   "devDependencies": {
     "concurrently": "^10.0.5"
+  },
+  "dependencies": {
+    "react-router": "^8.3.1"
   }
 }

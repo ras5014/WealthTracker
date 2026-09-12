@@ -1,21 +1,49 @@
-import { Button } from "@/components/ui/button"
+import { createBrowserRouter } from "react-router"
+import { RouterProvider } from "react-router/dom"
+import Dashboard from "@/pages/Dashboard"
+import Transactions from "@/pages/Transactions"
+import Emis from "@/pages/Emis"
+import Investments from "@/pages/Investments"
+import BudgetGoals from "@/pages/BudgetGoals"
+import AskAi from "@/pages/AskAi"
+import MainLayout from "@/components/MainLayout"
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainLayout />,
+    errorElement: <div>Page not found</div>,
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: "transactions",
+        element: <Transactions />,
+      },
+      {
+        path: "emis",
+        element: <Emis />,
+      },
+      {
+        path: "investments",
+        element: <Investments />,
+      },
+      {
+        path: "budget",
+        element: <BudgetGoals />,
+      },
+      {
+        path: "ask-ai",
+        element: <AskAi />,
+      },
+    ],
+  },
+])
 
 export function App() {
-  return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
-    </div>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App
