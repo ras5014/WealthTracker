@@ -7,6 +7,7 @@ import Investments from "@/pages/Investments"
 import BudgetGoals from "@/pages/BudgetGoals"
 import AskAi from "@/pages/AskAi"
 import MainLayout from "@/components/MainLayout"
+import { ThemeProvider } from "./components/theme-provider"
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,11 @@ const router = createBrowserRouter([
 ])
 
 export function App() {
-  return <RouterProvider router={router} />
+  return (
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  )
 }
 
 export default App
