@@ -5,7 +5,7 @@ import Transactions from "@/pages/Transactions"
 import Emis from "@/pages/Emis"
 import Investments from "@/pages/Investments"
 import BudgetGoals from "@/pages/BudgetGoals"
-import AskAi from "@/pages/AskAi"
+import AskFinance from "@/pages/AskFinance"
 import MainLayout from "@/components/MainLayout"
 import { ThemeProvider } from "./components/theme-provider"
 
@@ -36,8 +36,8 @@ const router = createBrowserRouter([
         element: <BudgetGoals />,
       },
       {
-        path: "ask-ai",
-        element: <AskAi />,
+        path: "ask-finance",
+        element: <AskFinance />,
       },
     ],
   },

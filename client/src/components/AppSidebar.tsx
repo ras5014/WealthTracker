@@ -58,8 +58,8 @@ const navItems: NavItem[] = [
     end: false,
   },
   {
-    to: "/ask-ai",
-    label: "Ask AI",
+    to: "/ask-finance",
+    label: "Ask Finance",
     icon: Sparkles,
     end: false,
   },
