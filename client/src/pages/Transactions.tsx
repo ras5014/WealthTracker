@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/drawer"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ExpenseForm } from "@/components/forms/ExpenseForm"
 
 export default function Transactions() {
   return (
@@ -67,7 +68,7 @@ export default function Transactions() {
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="expense" className="w-full">
-                    Add or manage your expenses here.
+                    <ExpenseForm />
                   </TabsContent>
                   <TabsContent value="income" className="w-full">
                     Add or manage your income here.
