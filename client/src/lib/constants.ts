@@ -28,6 +28,7 @@ export const paymentMethods = [
   "UPI",
   "Net Banking",
   "Wallet",
+  "Self Transfer",
   "Bank Transfer",
   "Other",
 ]
@@ -39,4 +40,12 @@ export const creditCardList = [
   "SBI Card Elite",
   "Axis Bank Vistara Signature",
   "Citi PremierMiles",
+]
+
+export const savingAccountList = [
+  "ICICI Bank Savings Account",
+  "HDFC Bank Savings Account",
+  "SBI Savings Account",
+  "Axis Bank Savings Account",
+  "Citi Bank Savings Account",
 ]

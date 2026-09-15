@@ -23,6 +23,7 @@ import {
   subCategory,
   paymentMethods,
   creditCardList,
+  savingAccountList,
 } from "@/lib/constants"
 
 export function ExpenseForm() {
@@ -214,6 +215,36 @@ export function ExpenseForm() {
                   {creditCardList.map((c) => (
                     <SelectItem key={c} value={c}>
                       {c}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      )}
+      {/* Saving Account */}
+      {(paymentMethod === "UPI" ||
+        paymentMethod === "Debit Card" ||
+        paymentMethod === "Bank Transfer") && (
+        <Controller
+          name="savingAccount"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel>Saving Account</FieldLabel>
+              <Select value={field.value} onValueChange={field.onChange}>
+                <SelectTrigger
+                  aria-invalid={fieldState.invalid}
+                  className="w-full data-[size=default]:h-12"
+                >
+                  <SelectValue placeholder="Select a saving account" />
+                </SelectTrigger>
+                <SelectContent>
+                  {savingAccountList.map((s) => (
+                    <SelectItem key={s} value={s}>
+                      {s}
                     </SelectItem>
                   ))}
                 </SelectContent>
