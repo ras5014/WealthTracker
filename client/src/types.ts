@@ -19,5 +19,5 @@ export const expenseFormSchema = z.object({
   description: z.string().trim().min(1, "Description is required"),
   note: z.string().optional(),
   savingAccount: z.string().optional(),
-  creditAccount: z.string().optional(),
+  creditCardList: z.string().optional(),
 })

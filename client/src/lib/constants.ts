@@ -31,3 +31,12 @@ export const paymentMethods = [
   "Bank Transfer",
   "Other",
 ]
+
+// TODO: Make the user put this data in profile section
+export const creditCardList = [
+  "ICICI Coral Visa",
+  "HDFC Regalia",
+  "SBI Card Elite",
+  "Axis Bank Vistara Signature",
+  "Citi PremierMiles",
+]

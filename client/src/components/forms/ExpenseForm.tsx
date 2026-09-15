@@ -18,12 +18,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { categories, subCategory, paymentMethods } from "@/lib/constants"
+import {
+  categories,
+  subCategory,
+  paymentMethods,
+  creditCardList,
+} from "@/lib/constants"
 
 export function ExpenseForm() {
   const form = useForm<z.infer<typeof expenseFormSchema>>({
     resolver: zodResolver(expenseFormSchema),
   })
+
+  const paymentMethod = form.watch("paymentMethod")
 
   function onSubmit(data: z.infer<typeof expenseFormSchema>) {
     console.log(data)
@@ -162,7 +169,14 @@ export function ExpenseForm() {
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
             <FieldLabel>Payment Method</FieldLabel>
-            <Select value={field.value} onValueChange={field.onChange}>
+            <Select
+              value={field.value}
+              onValueChange={(v) => {
+                field.onChange(v)
+                if (v !== "Credit Card")
+                  form.setValue("creditAccount", undefined)
+              }}
+            >
               <SelectTrigger
                 aria-invalid={fieldState.invalid}
                 className="w-full data-[size=default]:h-12"
@@ -181,6 +195,34 @@ export function ExpenseForm() {
           </Field>
         )}
       />
+      {/* Credit Card */}
+      {paymentMethod === "Credit Card" && (
+        <Controller
+          name="creditCardList"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel>Credit Card</FieldLabel>
+              <Select value={field.value} onValueChange={field.onChange}>
+                <SelectTrigger
+                  aria-invalid={fieldState.invalid}
+                  className="w-full data-[size=default]:h-12"
+                >
+                  <SelectValue placeholder="Select a credit card" />
+                </SelectTrigger>
+                <SelectContent>
+                  {creditCardList.map((c) => (
+                    <SelectItem key={c} value={c}>
+                      {c}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      )}
       {/* Notes */}
       <Controller
         name="note"
