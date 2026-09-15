@@ -8,6 +8,7 @@ import BudgetGoals from "@/pages/BudgetGoals"
 import AskFinance from "@/pages/AskFinance"
 import MainLayout from "@/components/MainLayout"
 import { ThemeProvider } from "./components/theme-provider"
+import { Toaster } from "react-hot-toast"
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,7 @@ export function App() {
   return (
     <ThemeProvider>
       <RouterProvider router={router} />
+      <Toaster />
     </ThemeProvider>
   )
 }

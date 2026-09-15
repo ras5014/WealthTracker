@@ -11,8 +11,7 @@ export type NavItem = {
 // Form Schemas
 // Expense Form Schema
 export const expenseFormSchema = z.object({
-  type: z.enum(["income", "expense"]),
-  amount: z.number().min(0, "Amount must be greater than or equal to 0"),
+  amount: z.coerce.number().min(0, "Amount must be greater than or equal to 0"),
   paymentMethod: z.string().optional(),
   category: z.string().optional(),
   subcategory: z.string().optional(),

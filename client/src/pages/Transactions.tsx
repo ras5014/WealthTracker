@@ -12,6 +12,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
+import { RotateCcw, SquarePen } from "lucide-react"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ExpenseForm } from "@/components/forms/ExpenseForm"
@@ -20,12 +21,22 @@ export default function Transactions() {
   return (
     <div className="flex flex-col p-4">
       <div className="mb-4 flex items-center justify-between">
-        <div className="flex space-x-2">
-          <Button variant="outline">Current month</Button>
-          <Button variant="outline">Previous month</Button>
-          <Button variant="outline">Last 3 months</Button>
-          <Button variant="outline">Last 6 months</Button>
-          <Button variant="outline">Last 12 months</Button>
+        <div className="flex items-center space-x-2">
+          <Button className="h-12" variant="outline">
+            Current month
+          </Button>
+          <Button className="h-12" variant="outline">
+            Previous month
+          </Button>
+          <Button className="h-12" variant="outline">
+            Last 3 months
+          </Button>
+          <Button className="h-12" variant="outline">
+            Last 6 months
+          </Button>
+          <Button className="h-12" variant="outline">
+            Last 12 months
+          </Button>
           <Separator orientation="vertical" />
           <span className="flex items-center space-x-2">
             <p className="text-sm text-gray-500">From</p>
@@ -36,8 +47,14 @@ export default function Transactions() {
             <p className="text-sm text-gray-500">To</p>
             <DatePicker />
           </span>
-          <Button>Apply</Button>
-          <Button variant="outline">Reset</Button>
+          <Button className="h-12">
+            <SquarePen className="h-4 w-4" />
+            Apply
+          </Button>
+          <Button className="h-12" variant="outline">
+            <RotateCcw className="h-4 w-4" />
+            Reset
+          </Button>
         </div>
         <div>
           <Drawer swipeDirection="right">
@@ -50,11 +67,13 @@ export default function Transactions() {
             >
               Open
             </DrawerTrigger>
-            <DrawerContent>
+            <DrawerContent className="p-4">
               <DrawerHeader>
-                <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+                <DrawerTitle className="text-2xl font-medium">
+                  Add transaction
+                </DrawerTitle>
                 <DrawerDescription>
-                  This action cannot be undone.
+                  record money moving in or out.
                 </DrawerDescription>
               </DrawerHeader>
               <div className="mt-2 w-full p-2">
@@ -76,8 +95,12 @@ export default function Transactions() {
                 </Tabs>
               </div>
               <DrawerFooter>
-                <Button>Submit</Button>
-                <DrawerClose render={<Button variant="outline" />}>
+                <Button type="submit" form="expense-form" className="h-12">
+                  Submit
+                </Button>
+                <DrawerClose
+                  render={<Button variant="outline" className="h-12" />}
+                >
                   Cancel
                 </DrawerClose>
               </DrawerFooter>
