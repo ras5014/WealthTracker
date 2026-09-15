@@ -33,7 +33,7 @@ export function ExpenseForm() {
     <form
       onSubmit={form.handleSubmit(onSubmit)}
       id="expense-form"
-      className="mt-4 space-y-8 overflow-auto p-4"
+      className="mt-4 space-y-8 overflow-auto pb-4"
     >
       {/* Description */}
       <Controller

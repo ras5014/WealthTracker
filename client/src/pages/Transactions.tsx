@@ -76,13 +76,41 @@ export default function Transactions() {
                   record money moving in or out.
                 </DrawerDescription>
               </DrawerHeader>
-              <div className="mt-2 w-full p-2">
+              <div className="mt-2 w-full px-4">
                 <Tabs defaultValue="expense" className="w-full">
-                  <TabsList className="grid h-12 w-full grid-cols-2">
-                    <TabsTrigger value="expense" className="text-base">
+                  <TabsList
+                    className="w-full overflow-hidden rounded-xl bg-muted"
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                      height: "3rem",
+                      padding: "0.25rem",
+                      alignItems: "stretch",
+                      boxSizing: "border-box",
+                    }}
+                  >
+                    <TabsTrigger
+                      value="expense"
+                      className="rounded-[calc(var(--radius-xl)-0.25rem)] text-base font-medium text-muted-foreground transition-all data-active:!bg-primary data-active:!text-primary-foreground data-active:!shadow-none"
+                      style={{
+                        height: "auto",
+                        minHeight: 0,
+                        alignSelf: "stretch",
+                        boxSizing: "border-box",
+                      }}
+                    >
                       Expense
                     </TabsTrigger>
-                    <TabsTrigger value="income" className="text-base">
+                    <TabsTrigger
+                      value="income"
+                      className="rounded-[calc(var(--radius-xl)-0.25rem)] text-base font-medium text-muted-foreground transition-all data-active:!bg-primary data-active:!text-primary-foreground data-active:!shadow-none"
+                      style={{
+                        height: "auto",
+                        minHeight: 0,
+                        alignSelf: "stretch",
+                        boxSizing: "border-box",
+                      }}
+                    >
                       Income
                     </TabsTrigger>
                   </TabsList>
