@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
-import { expenseFormSchema } from "@/types"
-import type { z } from "zod"
+import { z } from "zod"
+import { incomeFormSchema } from "../../types"
 import {
   Field,
   FieldDescription,
@@ -19,29 +19,27 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import {
-  categories,
-  subCategory,
-  paymentMethods,
   creditCardList,
+  creditedToItems,
   savingAccountList,
 } from "@/lib/constants"
 
-export function ExpenseForm() {
-  const form = useForm<z.infer<typeof expenseFormSchema>>({
-    resolver: zodResolver(expenseFormSchema),
+export default function IncomeForm() {
+  const form = useForm<z.infer<typeof incomeFormSchema>>({
+    resolver: zodResolver(incomeFormSchema),
   })
 
   // Have to watch the payment method to conditionally render related fields
-  const paymentMethod = form.watch("paymentMethod")
+  const creditedTo = form.watch("creditedTo")
 
-  function onSubmit(data: z.infer<typeof expenseFormSchema>) {
+  function onSubmit(data: z.infer<typeof incomeFormSchema>) {
     console.log(data)
   }
 
   return (
     <form
       onSubmit={form.handleSubmit(onSubmit)}
-      id="expense-form"
+      id="income-form"
       className="mt-4 space-y-8 overflow-auto pb-4"
     >
       {/* Description */}
@@ -56,7 +54,7 @@ export function ExpenseForm() {
                 *
               </span>
             </FieldLabel>
-            <FieldDescription>What did you spend on?</FieldDescription>
+            <FieldDescription>What came in?</FieldDescription>
             <Input
               {...field}
               id={field.name}
@@ -112,83 +110,29 @@ export function ExpenseForm() {
           </Field>
         )}
       />
-      {/* Category */}
+      {/* Credited To */}
       <Controller
-        name="category"
+        name="creditedTo"
         control={form.control}
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
-            <FieldLabel>Category</FieldLabel>
+            <FieldLabel>
+              Credited To
+              <span className="text-destructive" aria-hidden="true">
+                *
+              </span>
+            </FieldLabel>
             <Select value={field.value} onValueChange={field.onChange}>
               <SelectTrigger
                 aria-invalid={fieldState.invalid}
                 className="w-full data-[size=default]:h-12"
               >
-                <SelectValue placeholder="Select a category" />
+                <SelectValue placeholder="Select an option" />
               </SelectTrigger>
               <SelectContent>
-                {categories.map((c) => (
-                  <SelectItem key={c} value={c}>
-                    {c}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-      {/* Subcategory */}
-      <Controller
-        name="subcategory"
-        control={form.control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel>Subcategory</FieldLabel>
-            <Select value={field.value} onValueChange={field.onChange}>
-              <SelectTrigger
-                aria-invalid={fieldState.invalid}
-                className="w-full data-[size=default]:h-12"
-              >
-                <SelectValue placeholder="Select a subcategory" />
-              </SelectTrigger>
-              <SelectContent>
-                {subCategory.map((s) => (
-                  <SelectItem key={s} value={s}>
-                    {s}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-      {/* Payment Method */}
-      <Controller
-        name="paymentMethod"
-        control={form.control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel>Payment Method</FieldLabel>
-            <Select
-              value={field.value}
-              onValueChange={(v) => {
-                field.onChange(v)
-                if (v !== "Credit Card")
-                  form.setValue("creditCardList", undefined)
-              }}
-            >
-              <SelectTrigger
-                aria-invalid={fieldState.invalid}
-                className="w-full data-[size=default]:h-12"
-              >
-                <SelectValue placeholder="Select a payment method" />
-              </SelectTrigger>
-              <SelectContent>
-                {paymentMethods.map((p) => (
-                  <SelectItem key={p} value={p}>
-                    {p}
+                {creditedToItems.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -198,7 +142,7 @@ export function ExpenseForm() {
         )}
       />
       {/* Credit Card */}
-      {paymentMethod === "Credit Card" && (
+      {creditedTo === "creditCard" && (
         <Controller
           name="creditCardList"
           control={form.control}
@@ -226,9 +170,7 @@ export function ExpenseForm() {
         />
       )}
       {/* Saving Account */}
-      {(paymentMethod === "UPI" ||
-        paymentMethod === "Debit Card" ||
-        paymentMethod === "Bank Transfer") && (
+      {creditedTo === "savingsAccount" && (
         <Controller
           name="savingsAccount"
           control={form.control}

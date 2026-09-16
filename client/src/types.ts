@@ -18,6 +18,17 @@ export const expenseFormSchema = z.object({
   date: z.date(),
   description: z.string().trim().min(1, "Description is required"),
   note: z.string().optional(),
-  savingAccount: z.string().optional(),
+  savingsAccount: z.string().optional(),
+  creditCardList: z.string().optional(),
+})
+
+// Income Form Schema
+export const incomeFormSchema = z.object({
+  amount: z.coerce.number().min(0, "Amount must be greater than or equal to 0"),
+  date: z.date(),
+  description: z.string().trim().min(1, "Description is required"),
+  note: z.string().optional(),
+  creditedTo: z.enum(["savingsAccount", "creditCard"]),
+  savingsAccount: z.string().optional(),
   creditCardList: z.string().optional(),
 })

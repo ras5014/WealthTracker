@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { ChartAreaInteractive } from "@/components/charts/AreaChart"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -16,10 +17,13 @@ import { RotateCcw, SquarePen } from "lucide-react"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ExpenseForm } from "@/components/forms/ExpenseForm"
+import IncomeForm from "@/components/forms/IncomeForm"
 
 export default function Transactions() {
+  const [activeTab, setActiveTab] = useState<"expense" | "income">("expense")
   return (
     <div className="flex flex-col p-4">
+      {/* Filters */}
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <Button className="h-12" variant="outline">
@@ -57,6 +61,7 @@ export default function Transactions() {
           </Button>
         </div>
         <div>
+          {/* Add Transaction Drawer */}
           <Drawer swipeDirection="right">
             <DrawerTrigger
               render={
@@ -77,7 +82,11 @@ export default function Transactions() {
                 </DrawerDescription>
               </DrawerHeader>
               <div className="mt-2 w-full px-4">
-                <Tabs defaultValue="expense" className="w-full">
+                <Tabs
+                  defaultValue="expense"
+                  className="w-full"
+                  onValueChange={(v) => setActiveTab(v as "expense" | "income")}
+                >
                   <TabsList
                     className="w-full overflow-hidden rounded-xl bg-muted"
                     style={{
@@ -118,12 +127,16 @@ export default function Transactions() {
                     <ExpenseForm />
                   </TabsContent>
                   <TabsContent value="income" className="w-full">
-                    Add or manage your income here.
+                    <IncomeForm />
                   </TabsContent>
                 </Tabs>
               </div>
               <DrawerFooter>
-                <Button type="submit" form="expense-form" className="h-12">
+                <Button
+                  type="submit"
+                  form={`${activeTab}-form`}
+                  className="h-12"
+                >
                   Submit
                 </Button>
                 <DrawerClose
