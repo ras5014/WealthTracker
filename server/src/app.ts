@@ -26,6 +26,10 @@ app.post("/", (req, res) => {
 
 // Specify custom middlewares, logging, api routes later
 
+// Transactions routes
+import transactionsRouter from "./routes/transactions.route";
+app.use("/api/transactions", transactionsRouter);
+
 app.use(notFoundHandler);
 app.use(errorHandler);
 
