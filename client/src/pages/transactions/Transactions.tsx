@@ -16,8 +16,32 @@ import {
 import { RotateCcw, SquarePen } from "lucide-react"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ExpenseForm } from "@/components/forms/ExpenseForm"
-import IncomeForm from "@/components/forms/IncomeForm"
+import { ExpenseForm } from "@/components/custom/forms/ExpenseForm"
+import IncomeForm from "@/components/custom/forms/IncomeForm"
+import { DataTable } from "@/components/custom/data-table/DataTable"
+import { columns } from "./columns"
+
+const transactions = [
+  {
+    id: "1",
+    type: "expense",
+    amount: 1000,
+    date: new Date(),
+    description: "Grocery shopping",
+    note: "Bought fruits and vegetables",
+    paymentMethod: "UPI",
+    category: "Food",
+    subcategory: "Groceries",
+  },
+  {
+    id: "2",
+    type: "income",
+    amount: 5000,
+    date: new Date(),
+    description: "Salary",
+    note: "Monthly salary",
+  },
+]
 
 export default function Transactions() {
   const [activeTab, setActiveTab] = useState<"expense" | "income">("expense")
@@ -149,10 +173,13 @@ export default function Transactions() {
           </Drawer>
         </div>
       </div>
-      <div className="grid grid-cols-4 gap-4">
+      {/* <div className="grid grid-cols-4 gap-4">
         <div className="col-span-3">
           <ChartAreaInteractive />
         </div>
+      </div> */}
+      <div>
+        <DataTable columns={columns} data={transactions} />
       </div>
     </div>
   )

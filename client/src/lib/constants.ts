@@ -27,7 +27,6 @@ export const paymentMethods = [
   "Debit Card",
   "UPI",
   "Net Banking",
-  "Wallet",
   "Self Transfer",
   "Bank Transfer",
   "Other",

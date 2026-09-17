@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router"
 import { RouterProvider } from "react-router/dom"
 import Dashboard from "@/pages/Dashboard"
-import Transactions from "@/pages/Transactions"
+import Transactions from "@/pages/transactions/Transactions"
 import Emis from "@/pages/Emis"
 import Investments from "@/pages/Investments"
 import BudgetGoals from "@/pages/BudgetGoals"

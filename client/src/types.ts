@@ -32,3 +32,17 @@ export const incomeFormSchema = z.object({
   savingsAccount: z.string().optional(),
   creditCardList: z.string().optional(),
 })
+
+// Transaction Table Schema
+export const transactionSchema = z.object({
+  id: z.uuid(),
+  type: z.enum(["expense", "income"]),
+  amount: z.coerce.number().min(0, "Amount must be greater than or equal to 0"),
+  date: z.date(),
+  description: z.string().trim().min(1, "Description is required"),
+  note: z.string().optional(),
+  category: z.string().optional(),
+  subcategory: z.string().optional(),
+})
+
+export type Transaction = z.infer<typeof transactionSchema>

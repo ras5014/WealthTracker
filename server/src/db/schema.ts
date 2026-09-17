@@ -8,7 +8,6 @@ import {
   integer,
   date,
   pgEnum,
-  index,
 } from "drizzle-orm/pg-core";
 
 // Users table - core authentication and profile
@@ -29,51 +28,37 @@ export const userRelations = relations(users, ({ many }) => ({
 
 // Transactions
 export const transactionTypeEnum = pgEnum("transaction_type", [
-  "debit",
-  "credit",
+  "income",
+  "expense",
 ]);
 export const paymentMethodEnum = pgEnum("payment_method", [
   "cash",
   "credit_card",
   "debit_card",
   "upi",
+  "net_banking",
+  "self_transfer",
+  "bank_transfer",
   "other",
 ]);
 export const creditedToEnum = pgEnum("credited_to", [
   "savings_account",
   "credit_card",
 ]);
-export const transaction = pgTable(
-  "transactions",
-  {
-    id: uuid("id").primaryKey().defaultRandom(),
-    userId: uuid("user_id")
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    date: date("date").notNull(),
-    description: text("description").notNull(),
-    transactionType: transactionTypeEnum("transaction_type")
-      .default("debit")
-      .notNull(),
-    amount: integer("amount").notNull(),
-    category: varchar("category", { length: 100 }),
-    subCategory: varchar("sub_category", { length: 100 }),
-    paymentMethod: paymentMethodEnum("payment_method"),
-    creditedTo: creditedToEnum("credited_to"),
-    creditCard: varchar("credit_card", { length: 50 }),
-    note: text("note"),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
-    updatedAt: timestamp("updated_at").defaultNow().notNull(),
-  },
-  (table) => [
-    index("transactions_user_date_idx").on(table.userId, table.date),
-    index("transactions_user_type_idx").on(table.userId, table.transactionType),
-  ],
-);
-
-export const transactionRelations = relations(transaction, ({ one }) => ({
-  user: one(users, {
-    fields: [transaction.userId],
-    references: [users.id],
-  }),
-}));
+export const transaction = pgTable("transactions", {
+  id: uuid("id").primaryKey().defaultRandom().notNull(),
+  date: date("date").notNull(),
+  description: text("description").notNull(),
+  transactionType: transactionTypeEnum("transaction_type")
+    .default("expense")
+    .notNull(),
+  amount: integer("amount").notNull(),
+  category: varchar("category", { length: 100 }),
+  subCategory: varchar("sub_category", { length: 100 }),
+  paymentMethod: paymentMethodEnum("payment_method"),
+  creditedTo: creditedToEnum("credited_to"),
+  creditCard: varchar("credit_card", { length: 50 }),
+  note: text("note"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
