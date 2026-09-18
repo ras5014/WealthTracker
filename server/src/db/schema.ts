@@ -1,4 +1,3 @@
-import { relations } from "drizzle-orm";
 import {
   pgTable,
   uuid,
@@ -9,6 +8,7 @@ import {
   date,
   pgEnum,
 } from "drizzle-orm/pg-core";
+import { createSelectSchema, createInsertSchema } from "drizzle-zod";
 
 // Users table - core authentication and profile
 export const users = pgTable("users", {
@@ -21,10 +21,6 @@ export const users = pgTable("users", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
-
-export const userRelations = relations(users, ({ many }) => ({
-  transactions: many(transaction),
-}));
 
 // Transactions
 export const transactionTypeEnum = pgEnum("transaction_type", [
@@ -49,9 +45,7 @@ export const transaction = pgTable("transactions", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
   date: date("date").notNull(),
   description: text("description").notNull(),
-  transactionType: transactionTypeEnum("transaction_type")
-    .default("expense")
-    .notNull(),
+  transactionType: transactionTypeEnum("transaction_type").notNull(),
   amount: integer("amount").notNull(),
   category: varchar("category", { length: 100 }),
   subCategory: varchar("sub_category", { length: 100 }),
@@ -62,3 +56,6 @@ export const transaction = pgTable("transactions", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
+
+export const transactionSelectSchema = createSelectSchema(transaction);
+export const transactionInsertSchema = createInsertSchema(transaction);

@@ -1,13 +1,13 @@
 import { Router } from "express";
+import { transactionInsertSchema } from "../db/schema";
+import { validateBody } from "../middlewares/validation";
 
 const router = Router();
 
-import {
-  getAllTransactions,
-  createTransaction,
-} from "../controllers/transactions.conroller";
+import { getAll, create } from "../controllers/transactions.conroller";
 
-router.get("/", getAllTransactions);
-router.post("/", createTransaction);
+router
+  .get("/", getAll)
+  .post("/", validateBody(transactionInsertSchema), create);
 
 export default router;

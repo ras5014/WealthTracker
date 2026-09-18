@@ -1,9 +1,13 @@
 import type { Request, Response } from "express";
+import { createTransaction } from "../services/transactions.services";
 
-export const getAllTransactions = (req: Request, res: Response) => {
+export const getAll = (req: Request, res: Response) => {
   res.send("Get all transactions");
 };
 
-export const createTransaction = (req: Request, res: Response) => {
-  res.send("Create a new transaction");
+export const create = async (req: Request, res: Response) => {
+  res.status(201).json({
+    message: "Transaction created successfully",
+    transaction: await createTransaction(req.body),
+  });
 };
