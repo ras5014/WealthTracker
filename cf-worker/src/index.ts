@@ -11,11 +11,19 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
+type RequestBody = {
+	sms_message: string;
+	notification_message: string;
+};
+
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		if (request.method === 'POST') {
-			console.log('Post request body:', await request.json());
-			return new Response('Post request received');
+			const body: RequestBody = await request.json();
+			const { sms_message, notification_message } = body;
+			console.log('sms_message:', sms_message);
+			console.log('notification_message:', notification_message);
+			return new Response('Messages received successfully.');
 		}
 		return new Response('Hello World!');
 	},

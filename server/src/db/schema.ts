@@ -24,8 +24,8 @@ export const users = pgTable("users", {
 
 // Transactions
 export const transactionTypeEnum = pgEnum("transaction_type", [
-  "income",
-  "expense",
+  "debit",
+  "credit",
 ]);
 export const paymentMethodEnum = pgEnum("payment_method", [
   "cash",
@@ -52,6 +52,7 @@ export const transaction = pgTable("transactions", {
   paymentMethod: paymentMethodEnum("payment_method"),
   creditedTo: creditedToEnum("credited_to"),
   creditCard: varchar("credit_card", { length: 50 }),
+  savingsAccount: varchar("savings_account", { length: 50 }),
   note: text("note"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
