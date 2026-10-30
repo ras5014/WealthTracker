@@ -96,23 +96,23 @@ export default function Transactions() {
             >
               Open
             </DrawerTrigger>
-            <DrawerContent className="p-4">
+            <DrawerContent className="h-dvh p-4">
               <DrawerHeader>
                 <DrawerTitle className="text-2xl font-medium">
-                  Add transaction
+                  Add Transaction
                 </DrawerTitle>
                 <DrawerDescription>
-                  record money moving in or out.
+                  Record money moving in or out.
                 </DrawerDescription>
               </DrawerHeader>
-              <div className="mt-2 w-full px-4">
+              <div className="mt-2 min-h-0 w-full flex-1 px-4">
                 <Tabs
                   defaultValue="expense"
-                  className="w-full"
+                  className="h-full min-h-0 w-full"
                   onValueChange={(v) => setActiveTab(v as "expense" | "income")}
                 >
                   <TabsList
-                    className="w-full overflow-hidden rounded-xl bg-muted"
+                    className="w-full shrink-0 overflow-hidden rounded-xl bg-muted"
                     style={{
                       display: "grid",
                       gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
@@ -147,15 +147,21 @@ export default function Transactions() {
                       Income
                     </TabsTrigger>
                   </TabsList>
-                  <TabsContent value="expense" className="w-full">
+                  <TabsContent
+                    value="expense"
+                    className="min-h-0 w-full overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                  >
                     <ExpenseForm />
                   </TabsContent>
-                  <TabsContent value="income" className="w-full">
+                  <TabsContent
+                    value="income"
+                    className="min-h-0 w-full overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                  >
                     <IncomeForm />
                   </TabsContent>
                 </Tabs>
               </div>
-              <DrawerFooter>
+              <DrawerFooter className="pt-4">
                 <Button
                   type="submit"
                   form={`${activeTab}-form`}
