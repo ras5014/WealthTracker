@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { ChartAreaInteractive } from "@/components/charts/AreaChart"
+// import { ChartAreaInteractive } from "@/components/charts/AreaChart"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { DatePicker } from "@/components/ui/date-picker"
@@ -149,13 +149,13 @@ export default function Transactions() {
                   </TabsList>
                   <TabsContent
                     value="expense"
-                    className="min-h-0 w-full overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                    className="min-h-0 w-full [scrollbar-width:none] overflow-y-auto [&::-webkit-scrollbar]:hidden"
                   >
                     <ExpenseForm />
                   </TabsContent>
                   <TabsContent
                     value="income"
-                    className="min-h-0 w-full overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                    className="min-h-0 w-full [scrollbar-width:none] overflow-y-auto [&::-webkit-scrollbar]:hidden"
                   >
                     <IncomeForm />
                   </TabsContent>

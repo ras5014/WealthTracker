@@ -5,7 +5,7 @@ export const categories = [
   "Investments",
 ]
 
-export const subCategory = [
+export const subCategories = [
   "Food",
   "Movies",
   "Rent",
@@ -21,16 +21,7 @@ export const subCategory = [
   "Other",
 ]
 
-export const paymentMethods = [
-  "Cash",
-  "Credit Card",
-  "Debit Card",
-  "UPI",
-  "Net Banking",
-  "Self Transfer",
-  "Bank Transfer",
-  "Other",
-]
+export const paymentMethods = ["Credit Card", "Bank Account", "Other"]
 
 // TODO: Make the user put this data in profile section along with billing cycle
 export const creditCardList = [

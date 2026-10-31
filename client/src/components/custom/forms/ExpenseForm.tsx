@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
-import { expenseFormSchema } from "@/types"
+import { expenseSchema, type Transaction, type Expense } from "shared"
 import type { z } from "zod"
 import {
   Field,
@@ -20,21 +20,21 @@ import {
 } from "@/components/ui/select"
 import {
   categories,
-  subCategory,
+  subCategories,
   paymentMethods,
   creditCardList,
   savingAccountList,
 } from "@/lib/constants"
 
 export function ExpenseForm() {
-  const form = useForm<z.infer<typeof expenseFormSchema>>({
-    resolver: zodResolver(expenseFormSchema),
+  const form = useForm<Expense>({
+    resolver: zodResolver(expenseSchema),
   })
 
   // Have to watch the payment method to conditionally render related fields
   const paymentMethod = form.watch("paymentMethod")
 
-  function onSubmit(data: z.infer<typeof expenseFormSchema>) {
+  function onSubmit(data: Expense) {
     console.log(data)
   }
 
@@ -140,7 +140,7 @@ export function ExpenseForm() {
       />
       {/* Subcategory */}
       <Controller
-        name="subcategory"
+        name="subCategory"
         control={form.control}
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
@@ -153,7 +153,7 @@ export function ExpenseForm() {
                 <SelectValue placeholder="Select a subcategory" />
               </SelectTrigger>
               <SelectContent>
-                {subCategory.map((s) => (
+                {subCategories.map((s) => (
                   <SelectItem key={s} value={s}>
                     {s}
                   </SelectItem>
@@ -175,8 +175,7 @@ export function ExpenseForm() {
               value={field.value}
               onValueChange={(v) => {
                 field.onChange(v)
-                if (v !== "Credit Card")
-                  form.setValue("creditCardList", undefined)
+                if (v !== "Credit Card") form.setValue("creditCard", undefined)
               }}
             >
               <SelectTrigger
@@ -200,7 +199,7 @@ export function ExpenseForm() {
       {/* Credit Card */}
       {paymentMethod === "Credit Card" && (
         <Controller
-          name="creditCardList"
+          name="creditCard"
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
@@ -226,9 +225,7 @@ export function ExpenseForm() {
         />
       )}
       {/* Saving Account */}
-      {(paymentMethod === "UPI" ||
-        paymentMethod === "Debit Card" ||
-        paymentMethod === "Bank Transfer") && (
+      {paymentMethod === "Bank Account" && (
         <Controller
           name="savingsAccount"
           control={form.control}
