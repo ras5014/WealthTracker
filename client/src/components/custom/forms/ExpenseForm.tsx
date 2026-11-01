@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
-import { expenseSchema, type Transaction, type Expense } from "shared"
-import type { z } from "zod"
+import { expenseSchema, type Expense } from "shared"
 import {
   Field,
   FieldDescription,

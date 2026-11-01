@@ -3,6 +3,7 @@ import { z } from "zod";
 // Transaction schema
 export const transactionSchema = z.object({
   id: z.uuid(),
+  transactionType: z.literal("Income").or(z.literal("Expense")),
   description: z.string(),
   amount: z.number().positive(),
   date: z.date(),
@@ -45,3 +46,9 @@ export const transactionsResponseSchema = z.object({
 
 // Transaction Response type
 export type TransactionsResponse = z.infer<typeof transactionsResponseSchema>;
+
+// Create Transaction Schema
+export const createTransactionSchema = transactionSchema.omit({ id: true });
+
+// Create Transaction type
+export type CreateTransaction = z.infer<typeof createTransactionSchema>;
