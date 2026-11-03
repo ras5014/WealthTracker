@@ -9,9 +9,19 @@ export const getAllTransactions = async () => {
 export const createTransaction = async (
   transactionData: CreateTransaction,
 ): Promise<Transaction> => {
-  const [createdTransaction] = await db
+  const [res] = await db
     .insert(transaction)
     .values(transactionData)
     .returning();
-  return createdTransaction;
+
+  return {
+    ...res,
+    category: res.category ?? "",
+    subCategory: res.subCategory ?? "",
+    paymentMethod: res.paymentMethod as Transaction["paymentMethod"],
+    creditedTo: res.creditedTo ?? undefined,
+    savingsAccount: res.savingsAccount ?? undefined,
+    creditCard: res.creditCard ?? undefined,
+    note: res.note ?? undefined,
+  };
 };

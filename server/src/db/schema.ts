@@ -22,7 +22,7 @@ export const users = pgTable("users", {
 });
 
 // Transactions
-const transactionTypeEnum = pgEnum("transaction_type", ["Income", "Expense"]);
+export const transactionTypeEnum = pgEnum("transaction_type", ["Income", "Expense"]);
 
 export const transaction = pgTable("transactions", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
@@ -32,7 +32,9 @@ export const transaction = pgTable("transactions", {
   date: date("date", { mode: "date" }).notNull(),
   category: varchar("category", { length: 100 }),
   subCategory: varchar("sub_category", { length: 100 }),
-  paymentMethod: varchar("payment_method", { length: 50 }),
+  paymentMethod: varchar("payment_method", { length: 50 }).$type<
+    "Credit Card" | "Bank Account" | "Other"
+  >(),
   creditedTo: varchar("credited_to", { length: 50 }),
   savingsAccount: varchar("savings_account", { length: 50 }),
   creditCard: varchar("credit_card", { length: 50 }),
