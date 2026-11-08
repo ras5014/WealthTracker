@@ -14,14 +14,8 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  console.log("Request received");
-  res.status(200).json({ message: "Hello, World!" });
-});
-
-app.post("/", (req, res) => {
-  console.log("Request body:", req.body);
-  res.status(200).json({ message: "POST request received" });
+app.get("/health", (req, res) => {
+  res.status(200).json({ message: "OK" });
 });
 
 // Specify custom middlewares, logging, api routes later

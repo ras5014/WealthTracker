@@ -20,30 +20,15 @@ import { ExpenseForm } from "@/components/custom/forms/ExpenseForm"
 import IncomeForm from "@/components/custom/forms/IncomeForm"
 import { DataTable } from "@/components/custom/data-table/DataTable"
 import { columns } from "./columns"
-
-const transactions = [
-  {
-    id: "1",
-    type: "expense",
-    amount: 1000,
-    date: new Date(),
-    description: "Grocery shopping",
-    note: "Bought fruits and vegetables",
-    paymentMethod: "UPI",
-    category: "Food",
-    subcategory: "Groceries",
-  },
-  {
-    id: "2",
-    type: "income",
-    amount: 5000,
-    date: new Date(),
-    description: "Salary",
-    note: "Monthly salary",
-  },
-]
+import { useTransactions } from "@/hooks/transactions.hook"
 
 export default function Transactions() {
+  const { data: transactions, isLoading, isError, error } = useTransactions()
+
+  if (isError) {
+    console.error(error)
+  }
+
   const [activeTab, setActiveTab] = useState<"expense" | "income">("expense")
   return (
     <div className="flex flex-col p-4">
@@ -185,7 +170,13 @@ export default function Transactions() {
         </div>
       </div> */}
       <div>
-        <DataTable columns={columns} data={transactions} />
+        {isLoading ? (
+          <p>Loading transactions...</p>
+        ) : isError ? (
+          <p role="alert">Could not load transactions.</p>
+        ) : (
+          <DataTable columns={columns} data={transactions ?? []} />
+        )}
       </div>
     </div>
   )

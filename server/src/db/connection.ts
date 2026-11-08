@@ -35,3 +35,12 @@ if (isProd()) {
 
 export const db = drizzle(client, { schema });
 export default db;
+
+export const connectDB = async (): Promise<void> => {
+  const result = await client.query("SELECT 1 AS connected");
+  if (result.rows[0].connected === 1) {
+    console.log("Database connected successfully");
+  } else {
+    throw new Error("Database connection failed");
+  }
+};

@@ -1,5 +1,9 @@
 import { createBrowserRouter } from "react-router"
 import { RouterProvider } from "react-router/dom"
+import { Toaster } from "react-hot-toast"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+
 import Dashboard from "@/pages/Dashboard"
 import Transactions from "@/pages/transactions/Transactions"
 import Emis from "@/pages/Emis"
@@ -8,7 +12,6 @@ import BudgetGoals from "@/pages/BudgetGoals"
 import AskFinance from "@/pages/AskFinance"
 import MainLayout from "@/components/MainLayout"
 import { ThemeProvider } from "./components/theme-provider"
-import { Toaster } from "react-hot-toast"
 
 const router = createBrowserRouter([
   {
@@ -44,12 +47,17 @@ const router = createBrowserRouter([
   },
 ])
 
+const queryClient = new QueryClient()
+
 export function App() {
   return (
-    <ThemeProvider>
-      <RouterProvider router={router} />
-      <Toaster />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <RouterProvider router={router} />
+        <Toaster />
+      </ThemeProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   )
 }
 
